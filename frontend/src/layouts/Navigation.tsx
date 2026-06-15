@@ -1,8 +1,8 @@
-import { Link, useLocation } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import Logo from "../components/Logo";
+import Logo from "../components/Logo/logo";
 
 const navItems = [
   { name: "Home", path: "/" },
