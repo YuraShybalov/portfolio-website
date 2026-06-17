@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 interface GradientButtonProps {
   children: ReactNode;
@@ -12,7 +12,7 @@ interface GradientButtonProps {
   className?: string;
 }
 
-export default function GradientButton({
+export function GradientButton({
   children,
   href,
   to,
