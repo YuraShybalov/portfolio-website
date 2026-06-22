@@ -2,6 +2,8 @@ import { AboutHeroSection } from "../../components/sections/AboutHero/AboutHero"
 import { CareerSection } from "../../components/sections/Career/Career";
 import { EducationSection } from "../../components/sections/Education/Education";
 import { GoalsSection } from "../../components/sections/Goals/Goals";
+import { LearningRoadmapSection } from "../../components/sections/LearningRoadmap/LearningRoadmap";
+import { InterestsSection } from "../../components/sections/Interests/Interests";
 
 const AboutPage = () => {
   return (
@@ -11,6 +13,8 @@ const AboutPage = () => {
         <CareerSection />
         <EducationSection />
         <GoalsSection />
+        <LearningRoadmapSection />
+        <InterestsSection />
       </div>
     </div>
   );
