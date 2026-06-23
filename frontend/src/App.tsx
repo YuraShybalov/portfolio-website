@@ -4,7 +4,7 @@ import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/Home/HomePage";
 import AboutPage from "./pages/About/AboutPage";
 import ArchitecturePage from "./pages/Architecture/ArchitecturePage";
-import BlogPage from "./pages/Blog/BlogPage";
+import { BlogPage } from "./pages/Blog/BlogPage";
 import CertificatesPage from "./pages/Certificates/CertificatesPage";
 import ContactPage from "./pages/Contact/ContactPage";
 import EngineeringPage from "./pages/Engineering/EngineeringPage";

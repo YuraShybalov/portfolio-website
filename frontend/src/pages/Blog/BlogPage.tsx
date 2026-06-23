@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { TrendingUp, Calendar, Clock } from "lucide-react";
-import { SectionTitle } from "../../components/SectionTitle";
+import { motion } from "motion/react";
+import { Calendar, Clock } from "lucide-react";
+import { GlassCard } from "../../components/ui/GlassCard";
+import { SectionTitle } from "../../components/ui/SectionTitle";
 
 const articles = [
   {
@@ -87,155 +87,69 @@ const articles = [
 ];
 
 export function BlogPage() {
-  const filteredArticles = articles.filter((article) => {
-    const matchesSearch =
-      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "All" || article.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  const featuredArticles = filteredArticles.filter((a) => a.featured);
-  const regularArticles = filteredArticles.filter((a) => !a.featured);
-
   return (
     <div className="min-h-screen py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle subtitle="Technical insights, tutorials, and engineering thoughts">
           Technical Blog
         </SectionTitle>
-
-        {/* Featured Articles */}
-        {featuredArticles.length > 0 && (
-          <section className="mb-16">
-            <div className="flex items-center mb-6">
-              <TrendingUp className="w-6 h-6 text-yellow-500 mr-2" />
-              <h3 className="text-2xl font-bold">Featured Articles</h3>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              {featuredArticles.map((article, index) => (
-                <motion.div
-                  key={article.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Link to={`/blog/${article.slug}`}>
-                    <GlassCard className="h-full">
-                      <div className="aspect-video rounded-lg overflow-hidden mb-4 relative group">
-                        <img
-                          src={article.image}
-                          alt={article.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        />
-                        <div className="absolute top-4 left-4">
-                          <span className="px-3 py-1 bg-yellow-500 text-black rounded-full text-xs font-bold">
-                            FEATURED
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="mb-3">
-                        <span className="px-3 py-1 bg-blue-600/20 text-blue-400 rounded-full text-xs">
-                          {article.category}
+        <section className="mb-16">
+          <div className="grid md:grid-cols-2 gap-8">
+            {articles.map((article, index) => (
+              <motion.div
+                key={article.slug}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Link to={`/blog/${article.slug}`}>
+                  <GlassCard className="h-full">
+                    <div className="aspect-video rounded-lg overflow-hidden mb-4 relative group">
+                      <img
+                        src={article.image}
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1 bg-yellow-500 text-black rounded-full text-xs font-bold">
+                          FEATURED
                         </span>
                       </div>
+                    </div>
 
-                      <h3 className="text-2xl font-bold mb-3 hover:text-blue-400 transition-colors">
-                        {article.title}
-                      </h3>
+                    <div className="mb-3">
+                      <span className="px-3 py-1 bg-blue-600/20 text-blue-400 rounded-full text-xs">
+                        {article.category}
+                      </span>
+                    </div>
 
-                      <p className="text-gray-400 mb-4 line-clamp-2">
-                        {article.excerpt}
-                      </p>
+                    <h3 className="text-2xl font-bold mb-3 hover:text-blue-400 transition-colors">
+                      {article.title}
+                    </h3>
 
-                      <div className="flex items-center justify-between text-sm text-gray-400">
-                        <div className="flex items-center space-x-4">
-                          <div className="flex items-center">
-                            <Calendar className="w-4 h-4 mr-1" />
-                            {article.date}
-                          </div>
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {article.readTime}
-                          </div>
+                    <p className="text-gray-400 mb-4 line-clamp-2">
+                      {article.excerpt}
+                    </p>
+
+                    <div className="flex items-center justify-between text-sm text-gray-400">
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center">
+                          <Calendar className="w-4 h-4 mr-1" />
+                          {article.date}
                         </div>
-                        <span>{article.views} views</span>
-                      </div>
-                    </GlassCard>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Regular Articles */}
-        {regularArticles.length > 0 && (
-          <section>
-            <h3 className="text-2xl font-bold mb-6">All Articles</h3>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {regularArticles.map((article, index) => (
-                <motion.div
-                  key={article.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Link to={`/blog/${article.slug}`}>
-                    <GlassCard className="h-full">
-                      <div className="aspect-video rounded-lg overflow-hidden mb-4 relative group">
-                        <img
-                          src={article.image}
-                          alt={article.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        />
-                      </div>
-
-                      <div className="mb-3">
-                        <span className="px-3 py-1 bg-purple-600/20 text-purple-400 rounded-full text-xs">
-                          {article.category}
-                        </span>
-                      </div>
-
-                      <h3 className="text-lg font-bold mb-2 hover:text-blue-400 transition-colors">
-                        {article.title}
-                      </h3>
-
-                      <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                        {article.excerpt}
-                      </p>
-
-                      <div className="flex items-center justify-between text-xs text-gray-400">
-                        <div className="flex items-center space-x-3">
-                          <div className="flex items-center">
-                            <Calendar className="w-3 h-3 mr-1" />
-                            {article.date}
-                          </div>
-                          <div className="flex items-center">
-                            <Clock className="w-3 h-3 mr-1" />
-                            {article.readTime}
-                          </div>
+                        <div className="flex items-center">
+                          <Clock className="w-4 h-4 mr-1" />
+                          {article.readTime}
                         </div>
                       </div>
-                    </GlassCard>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {filteredArticles.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-gray-400 text-lg">
-              No articles found matching your search.
-            </p>
+                      <span>{article.views} views</span>
+                    </div>
+                  </GlassCard>
+                </Link>
+              </motion.div>
+            ))}
           </div>
-        )}
+        </section>
       </div>
     </div>
   );

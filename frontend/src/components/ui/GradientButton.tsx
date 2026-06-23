@@ -7,6 +7,7 @@ interface GradientButtonProps {
   href?: string;
   to?: string;
   onClick?: () => void;
+  type?: "button" | "submit" | "reset";
   variant?: "primary" | "secondary" | "outline";
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -17,6 +18,7 @@ export function GradientButton({
   href,
   to,
   onClick,
+  type = "button",
   variant = "primary",
   size = "md",
   className = "",
@@ -39,6 +41,7 @@ export function GradientButton({
 
   const content = (
     <motion.button
+      type={type}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
