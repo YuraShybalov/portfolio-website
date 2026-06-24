@@ -1,6 +1,7 @@
 import { Mail } from "lucide-react";
 import { Link } from "react-router";
 import { motion } from "motion/react";
+import { Logo } from "../components/Logo/Logo";
 
 const socialLinks = [
   { icon: Mail, href: "https://github.com", label: "GitHub" },
@@ -46,7 +47,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="text-2xl font-bold gradient-text mb-4">
-              &lt;DevPortfolio/&gt;
+              <Logo />
             </div>
             <p className="text-gray-400 mb-6 max-w-sm">
               Full Stack Developer & Software Engineer building modern web
