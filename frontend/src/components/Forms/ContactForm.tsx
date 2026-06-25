@@ -96,7 +96,7 @@ export function ContactForm() {
             />
           </div>
 
-          <GradientButton onClick={handleSubmit} size="lg" className="w-full">
+          <GradientButton type="submit" size="lg" className="w-full">
             Send Message
           </GradientButton>
         </form>
