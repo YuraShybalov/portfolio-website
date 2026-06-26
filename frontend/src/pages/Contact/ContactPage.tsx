@@ -1,5 +1,6 @@
 import { SectionTitle } from "../../components/ui/SectionTitle";
 import { ContactForm } from "../../components/Forms/ContactForm";
+import { motion } from "motion/react";
 
 const ContactPage = () => {
   return (
@@ -10,6 +11,16 @@ const ContactPage = () => {
         </SectionTitle>
         <div className="grid lg:grid-cols-2 gap-12">
           <ContactForm />
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="space-y-8"
+          >
+            <p className="text-lg text-gray-300">
+              I'm always open to discussing new projects, creative ideas, or
+              opportunities to collaborate.
+            </p>
+          </motion.div>
         </div>
       </div>
     </div>
