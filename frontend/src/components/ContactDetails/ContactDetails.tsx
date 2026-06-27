@@ -1,6 +1,26 @@
-import React from "react";
 import { GlassCard } from "../ui/GlassCard";
-import { contactInfo } from "../../data/contactInfo";
+import { Mail, Phone, MapPin } from "lucide-react";
+
+const contactInfo = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "contact@example.com",
+    href: "mailto:contact@example.com",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+1 (555) 123-4567",
+    href: "tel:+15551234567",
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "San Francisco, CA",
+    href: null,
+  },
+];
 
 export function ContactDetails() {
   return (
