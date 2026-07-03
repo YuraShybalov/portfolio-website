@@ -1,7 +1,8 @@
+import { motion } from "motion/react";
 import { SectionTitle } from "../../components/ui/SectionTitle";
 import { ContactForm } from "../../components/Forms/ContactForm";
-import { motion } from "motion/react";
 import { ContactDetails } from "../../components/ContactDetails/ContactDetails";
+import { SocialLinks } from "../../components/SocialLinks/SocialLinks";
 
 const ContactPage = () => {
   return (
@@ -18,6 +19,7 @@ const ContactPage = () => {
             className="space-y-8"
           >
             <ContactDetails />
+            <SocialLinks />
           </motion.div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import { ArrowRight, ExternalLink, User } from "lucide-react";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { ArrowRight } from "lucide-react";
 import { GradientButton } from "../../ui/GradientButton";
 
 const HeroSection = () => {
@@ -8,7 +9,7 @@ const HeroSection = () => {
       {/* Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-cyan-600/20 blur-3xl" />
 
-{/* bg-gradient-to-br */}
+      {/* bg-gradient-to-br */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
@@ -61,7 +62,7 @@ const HeroSection = () => {
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                <ExternalLink className="w-6 h-6" />
+                <FaGithub className="w-6 h-6" />
               </a>
               <a
                 href="https://linkedin.com"
@@ -69,7 +70,7 @@ const HeroSection = () => {
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                <User className="w-6 h-6" />
+                <FaLinkedin className="w-6 h-6" />
               </a>
             </div>
           </motion.div>
