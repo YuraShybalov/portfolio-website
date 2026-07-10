@@ -1,0 +1,8 @@
+CREATE TABLE "Profile" (
+  "id" SERIAL PRIMARY KEY,
+  "fullName" TEXT NOT NULL,
+  "title" TEXT NOT NULL,
+  "bio" TEXT,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP(3) NOT NULL
+);
