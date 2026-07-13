@@ -7,56 +7,188 @@ datasource db {
   provider = "postgresql"
 }
 
+
+enum TechnologyCategory {
+  LANGUAGE
+  FRONTEND
+  BACKEND
+  DATABASE
+  ORM
+  FRAMEWORK
+  LIBRARY
+  TOOL
+  DEVOPS
+  TESTING
+  CLOUD
+}
+
+enum ProjectType {
+  WEB
+  MOBILE
+  DESKTOP
+  BACKEND
+  API
+  FULLSTACK
+  OTHER
+}
+
+enum EducationType {
+  DIPLOMA
+  CERTIFICATE
+  COURSE
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  login        String   @unique
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
 model Profile {
   id          Int      @id @default(autoincrement())
-
-  fullName    String
-  title       String
-  bio         String?
-
+  firstName   String
+  lastName    String
   avatar      String?
-  coverImage  String?
-
-  email       String
+  position    String
+  shortAbout  String
+  fullAbout   String
   phone       String?
+  email       String   @unique
   location    String?
-
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  projects    Project[]
+  socials     SocialLink[]
+  certificates Certificate[]
 }
 
-enum ProjectStatus {
-  PLANNING
-  IN_PROGRESS
-  TESTING
-  COMPLETED
-  PAUSED
-  ARCHIVED
+model SocialLink {
+  id         Int      @id @default(autoincrement())
+  name       String
+  icon       String?
+  url        String
+  order      Int      @default(0)
+
+  profileId  Int
+  profile    Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+model Certificate {
+  id            Int      @id @default(autoincrement())
+  title         String
+  issuer        String
+  issuedAt      DateTime
+  expiresAt     DateTime?
+  credentialUrl String?
+  image         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  profileId     Int?
+  profile       Profile? @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+model Contact {
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String
+  subject    String?
+  message    String
+  phone      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Technology {
+  id         Int                  @id @default(autoincrement())
+  name       String               @unique
+  icon       String
+  category   TechnologyCategory
+  website    String?
+  order      Int                  @default(0)
+  createdAt  DateTime             @default(now())
+  updatedAt  DateTime             @updatedAt
+
+  projects   ProjectTechnology[]
 }
 
 model Project {
-  id               Int           @id @default(autoincrement())
+  id                Int         @id @default(autoincrement())
+  title             String
+  slug              String      @unique
+  thumbnail         String?
+  shortDescription  String
+  description       String?
+  type              ProjectType
+  githubUrl         String?
+  liveUrl           String?
+  featured          Boolean     @default(false)
+  order             Int         @default(0)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
 
-  title            String
-  slug             String        @unique
-
-  shortDescription String
-  description      String
-
-  image            String
-
-  githubUrl        String?
-  liveUrl          String?
-
-  status           ProjectStatus @default(PLANNING)
-
-  featured         Boolean       @default(false)
-
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
-
-  profileId        Int
-  profile          Profile       @relation(fields: [profileId], references: [id])
+  technologies      ProjectTechnology[]
 }
+
+model ProjectTechnology {
+  projectId     Int
+  technologyId  Int
+
+  project       Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  technology    Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, technologyId])
+}
+
+model Career {
+  id                Int       @id @default(autoincrement())
+  startDate         DateTime
+  endDate           DateTime?
+  currentJob        Boolean   @default(false)
+  position          String
+  company           String
+  shortDescription  String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  items             CareerItem[]
+}
+
+model CareerItem {
+  id        Int      @id @default(autoincrement())
+  text      String
+
+  careerId  Int
+  career    Career @relation(fields: [careerId], references: [id], onDelete: Cascade)
+}
+
+model Education {
+  id                  Int             @id @default(autoincrement())
+  startDate           DateTime
+  endDate             DateTime?
+  currentEducation    Boolean         @default(false)
+  title               String
+  location            String?
+  website             String?
+  image               String?
+  diplomaFile         String?
+  type                EducationType
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+}
+
+model BlogPost {
+  id                Int       @id @default(autoincrement())
+  title             String
+  slug              String    @unique
+  coverImage        String?
+  shortDescription  String
+  content           String
+  published         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
