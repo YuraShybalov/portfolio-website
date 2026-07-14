@@ -2,6 +2,6 @@ import 'dotenv/config';
 
 import app from './app';
 
-app.listen(4000, () => {
-  console.log('Server started');
+app.listen(3000, () => {
+  console.log('🚀 Server started on http://localhost:3000');
 });
