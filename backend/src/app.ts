@@ -1,9 +1,10 @@
 import express from 'express';
-import profileRoutes from './modules/profile/profile.routes';
+import routes from './routes';
 
 const app = express();
 
 app.use(express.json());
-app.use('/api/profile', profileRoutes);
+
+app.use('/api', routes);
 
 export default app;

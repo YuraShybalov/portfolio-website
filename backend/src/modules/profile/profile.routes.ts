@@ -1,11 +1,9 @@
 import { Router } from 'express';
+import { profileController } from './profile.controller';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.json({
-    message: 'Profile route works!',
-  });
-});
+router.get('/', profileController.getProfile);
+router.put('/', profileController.updateProfile);
 
 export default router;
