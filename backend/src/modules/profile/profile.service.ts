@@ -1,13 +1,20 @@
 import { prisma } from '../../database/prisma/prisma';
-import { UpdateProfileDto } from '../../validators/profile.validator';
+import { UpdateProfileDto } from './profile.validator';
 import { ApiError } from '../../utils/ApiError';
+
+const PROFILE_ID = 1;
+
+const profileInclude = {
+  socials: true,
+};
 
 export const profileService = {
   async getProfile() {
-    const profile = await prisma.profile.findFirst({
-      include: {
-        socials: true,
+    const profile = await prisma.profile.findUnique({
+      where: {
+        id: PROFILE_ID,
       },
+      include: profileInclude,
     });
 
     if (!profile) {
@@ -16,15 +23,16 @@ export const profileService = {
 
     return profile;
   },
+
   async updateProfile(data: UpdateProfileDto) {
+    await this.getProfile();
+
     return prisma.profile.update({
       where: {
-        id: 1,
+        id: PROFILE_ID,
       },
       data,
-      include: {
-        socials: true,
-      },
+      include: profileInclude,
     });
   },
 };

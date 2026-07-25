@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { profileController } from './profile.controller';
 import { validate } from '../../middleware/validate';
-import { updateProfileSchema } from '../../validators/profile.validator';
+import { updateProfileSchema } from './profile.validator';
 import { asyncHandler } from '../../utils/asyncHandler';
 
 const router = Router();
