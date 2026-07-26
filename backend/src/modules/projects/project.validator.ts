@@ -19,6 +19,10 @@ export const createProjectSchema = z.object({
 });
 
 export const updateProjectSchema = createProjectSchema.partial();
+export const projectIdSchema = z.object({
+  id: z.coerce.number().int().positive(),
+});
 
 export type CreateProjectDto = z.infer<typeof createProjectSchema>;
 export type UpdateProjectDto = z.infer<typeof updateProjectSchema>;
+export type ProjectIdDto = z.infer<typeof projectIdSchema>;
