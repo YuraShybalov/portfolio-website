@@ -3,22 +3,23 @@ import { z } from 'zod';
 export const createProjectSchema = z.object({
   title: z.string().min(1).max(100),
   slug: z.string().min(1).max(100),
+
+  thumbnail: z.url().optional(),
+
   shortDescription: z.string().min(1).max(255),
-  description: z.string().min(1),
-  image: z.string().url(),
-  githubUrl: z.string().url().optional(),
-  liveUrl: z.string().url().optional(),
+  description: z.string().min(1).optional(),
 
   type: z.enum(['WEB', 'MOBILE', 'DESKTOP', 'BACKEND', 'API', 'FULLSTACK', 'OTHER']),
 
-  status: z
-    .enum(['PLANNING', 'IN_PROGRESS', 'TESTING', 'COMPLETED', 'PAUSED', 'ARCHIVED'])
-    .optional(),
+  githubUrl: z.url().optional(),
+  liveUrl: z.url().optional(),
 
   featured: z.boolean().optional(),
+  order: z.number().int().optional(),
 });
 
 export const updateProjectSchema = createProjectSchema.partial();
+
 export const projectIdSchema = z.object({
   id: z.coerce.number().int().positive(),
 });
