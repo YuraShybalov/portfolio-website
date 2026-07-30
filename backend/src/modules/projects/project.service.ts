@@ -5,6 +5,9 @@ import { CreateProjectDto, UpdateProjectDto } from './project.validator';
 export const projectService = {
   async getAllProjects() {
     return prisma.project.findMany({
+      orderBy: {
+        order: 'asc',
+      },
       include: {
         technologies: {
           include: {
@@ -12,15 +15,13 @@ export const projectService = {
           },
         },
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
     });
   },
 
   async getProjectById(id: number) {
     const project = await prisma.project.findUnique({
       where: { id },
+
       include: {
         technologies: {
           include: {
@@ -38,17 +39,59 @@ export const projectService = {
   },
 
   async createProject(data: CreateProjectDto) {
+    const { technologyIds, ...projectData } = data;
+
     return prisma.project.create({
-      data,
+      data: {
+        ...projectData,
+
+        technologies: technologyIds
+          ? {
+              create: technologyIds.map((technologyId) => ({
+                technologyId,
+              })),
+            }
+          : undefined,
+      },
+
+      include: {
+        technologies: {
+          include: {
+            technology: true,
+          },
+        },
+      },
     });
   },
 
   async updateProject(id: number, data: UpdateProjectDto) {
     await this.getProjectById(id);
 
+    const { technologyIds, ...projectData } = data;
+
     return prisma.project.update({
       where: { id },
-      data,
+
+      data: {
+        ...projectData,
+
+        ...(technologyIds !== undefined && {
+          technologies: {
+            deleteMany: {},
+            create: technologyIds.map((technologyId) => ({
+              technologyId,
+            })),
+          },
+        }),
+      },
+
+      include: {
+        technologies: {
+          include: {
+            technology: true,
+          },
+        },
+      },
     });
   },
 

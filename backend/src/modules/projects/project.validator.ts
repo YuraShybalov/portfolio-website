@@ -3,9 +3,7 @@ import { z } from 'zod';
 export const createProjectSchema = z.object({
   title: z.string().min(1).max(100),
   slug: z.string().min(1).max(100),
-
   thumbnail: z.url().optional(),
-
   shortDescription: z.string().min(1).max(255),
   description: z.string().min(1).optional(),
 
@@ -16,6 +14,7 @@ export const createProjectSchema = z.object({
 
   featured: z.boolean().optional(),
   order: z.number().int().optional(),
+  technologyIds: z.array(z.number().int().positive()).optional(),
 });
 
 export const updateProjectSchema = createProjectSchema.partial();
