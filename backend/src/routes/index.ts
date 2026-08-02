@@ -4,6 +4,7 @@ import projectRoutes from '../modules/projects/project.routes';
 import technologyRoutes from '../modules/technologies/technology.routes';
 import socialRoutes from '../modules/social/social.routes';
 import certificateRoutes from '../modules/certificates/certificate.routes';
+import careerRoutes from '../modules/career/career.routes';
 
 const router = Router();
 
@@ -12,4 +13,5 @@ router.use('/projects', projectRoutes);
 router.use('/technologies', technologyRoutes);
 router.use('/social', socialRoutes);
 router.use('/certificates', certificateRoutes);
+router.use('/career', careerRoutes);
 export default router;
