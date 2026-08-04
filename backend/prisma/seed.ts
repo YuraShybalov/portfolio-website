@@ -1,33 +1,42 @@
+import bcrypt from 'bcrypt';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../generated/prisma/client';
+import { env } from '../src/config/env';
 
 const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
+  connectionString: env.DATABASE_URL,
 });
 
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
+  const passwordHash = await bcrypt.hash(env.ADMIN_PASSWORD, 10);
+
   const admin = await prisma.admin.upsert({
-    where: { login: 'admin' },
+    where: {
+      login: env.ADMIN_LOGIN,
+    },
     update: {
-      email: 'admin@example.com',
-      passwordHash: '$2b$10$WmT4Qq2j3Y0J8uQvXGZ5QeS1Y2n2V1N9fQzWq8wX1r3LzA1B2Y3C',
+      email: env.ADMIN_EMAIL,
+      passwordHash,
     },
     create: {
-      login: 'admin',
-      email: 'admin@example.com',
-      passwordHash: '$2b$10$WmT4Qq2j3Y0J8uQvXGZ5QeS1Y2n2V1N9fQzWq8wX1r3LzA1B2Y3C',
+      login: env.ADMIN_LOGIN,
+      email: env.ADMIN_EMAIL,
+      passwordHash,
     },
   });
 
   const profile = await prisma.profile.upsert({
-    where: { email: 'portfolio@example.com' },
+    where: {
+      email: 'portfolio@example.com',
+    },
     update: {
       firstName: 'Іван',
       lastName: 'Коваленко',
       position: 'Full Stack Developer',
-      shortAbout: 'Створюю сучасні вебсервіси й динамічні інтерфейси.',
+      shortAbout:
+        'Створюю сучасні вебсервіси й динамічні інтерфейси.',
       fullAbout:
         'Я розробник з досвідом у створенні продуктів від ідеї до продакшену. Люблю чистий код, хорошу UX і швидкий розвиток.',
       phone: '+380501112233',
@@ -37,7 +46,8 @@ async function main() {
       firstName: 'Іван',
       lastName: 'Коваленко',
       position: 'Full Stack Developer',
-      shortAbout: 'Створюю сучасні вебсервіси й динамічні інтерфейси.',
+      shortAbout:
+        'Створюю сучасні вебсервіси й динамічні інтерфейси.',
       fullAbout:
         'Я розробник з досвідом у створенні продуктів від ідеї до продакшену. Люблю чистий код, хорошу UX і швидкий розвиток.',
       phone: '+380501112233',
@@ -68,7 +78,9 @@ async function main() {
   });
 
   const technology = await prisma.technology.upsert({
-    where: { name: 'TypeScript' },
+    where: {
+      name: 'TypeScript',
+    },
     update: {
       icon: 'typescript',
       category: 'LANGUAGE',
@@ -85,12 +97,16 @@ async function main() {
   });
 
   const project = await prisma.project.upsert({
-    where: { slug: 'portfolio-website' },
+    where: {
+      slug: 'portfolio-website',
+    },
     update: {
       title: 'Portfolio Website',
       thumbnail: 'https://example.com/portfolio.jpg',
-      shortDescription: 'Портфоліо-сайт для демонстрації проектів і навичок.',
-      description: 'Простий і сучасний сайт з адміністративною панеллю.',
+      shortDescription:
+        'Портфоліо-сайт для демонстрації проектів і навичок.',
+      description:
+        'Простий і сучасний сайт з адміністративною панеллю.',
       type: 'FULLSTACK',
       githubUrl: 'https://github.com/example/portfolio',
       liveUrl: 'https://example.com',
@@ -101,8 +117,10 @@ async function main() {
       title: 'Portfolio Website',
       slug: 'portfolio-website',
       thumbnail: 'https://example.com/portfolio.jpg',
-      shortDescription: 'Портфоліо-сайт для демонстрації проектів і навичок.',
-      description: 'Простий і сучасний сайт з адміністративною панеллю.',
+      shortDescription:
+        'Портфоліо-сайт для демонстрації проектів і навичок.',
+      description:
+        'Простий і сучасний сайт з адміністративною панеллю.',
       type: 'FULLSTACK',
       githubUrl: 'https://github.com/example/portfolio',
       liveUrl: 'https://example.com',
@@ -126,7 +144,11 @@ async function main() {
   });
 
   console.log('Seed completed successfully');
-  console.log({ admin: admin.login, profile: profile.email, project: project.slug });
+  console.log({
+    admin: admin.login,
+    profile: profile.email,
+    project: project.slug,
+  });
 }
 
 main()

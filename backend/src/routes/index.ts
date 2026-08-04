@@ -8,6 +8,7 @@ import careerRoutes from '../modules/career/career.routes';
 import educationRoutes from '../modules/education/education.routes';
 import contactRoutes from '../modules/contacts/contact.routes';
 import blogRoutes from '../modules/blog/blog.routes';
+import authRoutes from '../modules/auth/auth.routes';
 
 const router = Router();
 
@@ -20,4 +21,5 @@ router.use('/career', careerRoutes);
 router.use('/education', educationRoutes);
 router.use('/contact', contactRoutes);
 router.use('/blog', blogRoutes);
+router.use('/auth', authRoutes);
 export default router;
