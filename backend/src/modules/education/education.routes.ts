@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { authenticate } from '../../middleware/auth.middleware';
 import { asyncHandler } from '../../utils/asyncHandler';
 import { validate } from '../../middleware/validate';
 
@@ -23,12 +24,14 @@ router.get(
 
 router.post(
   '/',
+  authenticate,
   validate(createEducationSchema),
   asyncHandler(educationController.createEducation),
 );
 
 router.patch(
   '/:id',
+  authenticate,
   validate(educationIdSchema, 'params'),
   validate(updateEducationSchema),
   asyncHandler(educationController.updateEducation),
@@ -36,6 +39,7 @@ router.patch(
 
 router.delete(
   '/:id',
+  authenticate,
   validate(educationIdSchema, 'params'),
   asyncHandler(educationController.deleteEducation),
 );

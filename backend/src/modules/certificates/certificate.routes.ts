@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { authenticate } from '../../middleware/auth.middleware';
 import { asyncHandler } from '../../utils/asyncHandler';
 import { validate } from '../../middleware/validate';
 
@@ -22,12 +23,14 @@ router.get(
 
 router.post(
   '/',
+  authenticate,
   validate(createCertificateSchema),
   asyncHandler(certificateController.createCertificate),
 );
 
 router.patch(
   '/:id',
+  authenticate,
   validate(certificateIdSchema, 'params'),
   validate(updateCertificateSchema),
   asyncHandler(certificateController.updateCertificate),
@@ -35,6 +38,7 @@ router.patch(
 
 router.delete(
   '/:id',
+  authenticate,
   validate(certificateIdSchema, 'params'),
   asyncHandler(certificateController.deleteCertificate),
 );

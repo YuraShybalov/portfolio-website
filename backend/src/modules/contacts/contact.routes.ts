@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { authenticate } from '../../middleware/auth.middleware';
 import { asyncHandler } from '../../utils/asyncHandler';
 import { validate } from '../../middleware/validate';
 
@@ -17,10 +18,16 @@ router.get(
   asyncHandler(contactController.getContactById),
 );
 
-router.post('/', validate(createContactSchema), asyncHandler(contactController.createContact));
+router.post(
+  '/',
+  authenticate,
+  validate(createContactSchema),
+  asyncHandler(contactController.createContact),
+);
 
 router.patch(
   '/:id',
+  authenticate,
   validate(contactIdSchema, 'params'),
   validate(updateContactSchema),
   asyncHandler(contactController.updateContact),
@@ -28,6 +35,7 @@ router.patch(
 
 router.delete(
   '/:id',
+  authenticate,
   validate(contactIdSchema, 'params'),
   asyncHandler(contactController.deleteContact),
 );

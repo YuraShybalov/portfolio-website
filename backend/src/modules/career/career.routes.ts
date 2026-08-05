@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { authenticate } from '../../middleware/auth.middleware';
 import { asyncHandler } from '../../utils/asyncHandler';
 import { validate } from '../../middleware/validate';
 
@@ -16,10 +17,17 @@ router.get(
   asyncHandler(careerController.getCareerById),
 );
 
-router.post('/', validate(createCareerSchema), asyncHandler(careerController.createCareer));
+router.post(
+  '/',
+
+  authenticate,
+  validate(createCareerSchema),
+  asyncHandler(careerController.createCareer),
+);
 
 router.patch(
   '/:id',
+  authenticate,
   validate(careerIdSchema, 'params'),
   validate(updateCareerSchema),
   asyncHandler(careerController.updateCareer),
@@ -27,6 +35,7 @@ router.patch(
 
 router.delete(
   '/:id',
+  authenticate,
   validate(careerIdSchema, 'params'),
   asyncHandler(careerController.deleteCareer),
 );

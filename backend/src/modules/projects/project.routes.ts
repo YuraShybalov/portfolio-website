@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { authenticate } from '../../middleware/auth.middleware';
 import { asyncHandler } from '../../utils/asyncHandler';
 import { validate } from '../../middleware/validate';
 
@@ -16,10 +17,16 @@ router.get(
   asyncHandler(projectController.getProjectById),
 );
 
-router.post('/', validate(createProjectSchema), asyncHandler(projectController.createProject));
+router.post(
+  '/',
+  authenticate,
+  validate(createProjectSchema),
+  asyncHandler(projectController.createProject),
+);
 
 router.patch(
   '/:id',
+  authenticate,
   validate(projectIdSchema, 'params'),
   validate(updateProjectSchema),
   asyncHandler(projectController.updateProject),
@@ -27,6 +34,7 @@ router.patch(
 
 router.delete(
   '/:id',
+  authenticate,
   validate(projectIdSchema, 'params'),
   asyncHandler(projectController.deleteProject),
 );

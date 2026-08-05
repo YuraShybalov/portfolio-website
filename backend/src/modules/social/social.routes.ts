@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { authenticate } from '../../middleware/auth.middleware';
 import { validate } from '../../middleware/validate';
 import { asyncHandler } from '../../utils/asyncHandler';
 
@@ -16,10 +17,16 @@ router.get(
   asyncHandler(socialController.getSocialById),
 );
 
-router.post('/', validate(createSocialSchema), asyncHandler(socialController.createSocial));
+router.post(
+  '/',
+  authenticate,
+  validate(createSocialSchema),
+  asyncHandler(socialController.createSocial),
+);
 
 router.patch(
   '/:id',
+  authenticate,
   validate(socialIdSchema, 'params'),
   validate(updateSocialSchema),
   asyncHandler(socialController.updateSocial),
@@ -27,6 +34,7 @@ router.patch(
 
 router.delete(
   '/:id',
+  authenticate,
   validate(socialIdSchema, 'params'),
   asyncHandler(socialController.deleteSocial),
 );

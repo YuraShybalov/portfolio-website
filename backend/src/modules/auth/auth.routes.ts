@@ -1,6 +1,6 @@
 import { Router } from 'express';
-
 import { validate } from '../../middleware/validate';
+// import { authenticate } from '../../middleware/auth.middleware';
 import { asyncHandler } from '../../utils/asyncHandler';
 
 import { authController } from './auth.controller';

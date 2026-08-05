@@ -19,7 +19,7 @@ export function authenticate(req: Request, _res: Response, next: NextFunction) {
   try {
     const payload = verifyAccessToken(token);
 
-    console.log(payload);
+    req.admin = payload;
 
     next();
   } catch {

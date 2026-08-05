@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { authenticate } from '../../middleware/auth.middleware';
 import { asyncHandler } from '../../utils/asyncHandler';
 import { validate } from '../../middleware/validate';
 
@@ -22,12 +23,14 @@ router.get(
 
 router.post(
   '/',
+  authenticate,
   validate(createTechnologySchema),
   asyncHandler(technologyController.createTechnology),
 );
 
 router.patch(
   '/:id',
+  authenticate,
   validate(technologyIdSchema, 'params'),
   validate(updateTechnologySchema),
   asyncHandler(technologyController.updateTechnology),
@@ -35,6 +38,7 @@ router.patch(
 
 router.delete(
   '/:id',
+  authenticate,
   validate(technologyIdSchema, 'params'),
   asyncHandler(technologyController.deleteTechnology),
 );
